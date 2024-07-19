@@ -8,21 +8,26 @@
 				{{ csrf_field() }}
 				<input type="hidden" name="idProfile" value="{{$profile->id}}">
 				<input type="hidden" name="_method" value="PUT">
+				{{-- <img src="{{url('/')}}/uploads/images/{{$profile->image}}" width="250px" height="200px"> --}}
 				<div class="form-group">
 					<label>Username</label>
 					<input type="text" name="username" value="{{$profile->username}}" readonly="" class="form-control" >
 					<small class="form-text text-muted">The username must contain only lowercase letters, numbers, and hyphens/underscores.</small>
-				</div>				
+				</div>
+				{{-- <div class="form-group">
+					<label>Salutation</label>
+					<input type="text" name="salutation" value="{{$profile->salutation}}" class="form-control">
+				</div> --}}
 				<div class="form-group">
-					<label>Nama Depan</label>
+					<label>First Name</label>
 					<input type="text" name="first_name" value="{{$profile->first_name}}" class="form-control">
 				</div>
 				<div class="form-group">
-					<label>Nama Tengah</label>
+					<label>Middle Name</label>
 					<input type="text" name="middle_name" value="{{$profile->middle_name}}" class="form-control">
 				</div>
 				<div class="form-group">
-					<label>Nama Belakang</label>
+					<label>Last Name</label>
 					<input type="text" name="last_name" value="{{$profile->last_name}}" class="form-control">
 				</div>
 				{{-- <div class="form-group">
@@ -42,10 +47,20 @@
 				}
 				?>
 				<div class="form-group">
-					<label>Daftar Sebagai Apa : </label>					
+					<label>Status Pekerjaan : </label>
+					&nbsp;
 					<label class="radio-inline">
-						<input type="radio" name="category" value="mhs" {{ $profile->category=="mhs" ? "checked" : "" }} onclick="show_form()"><b>Peneliti</b>
+						<input type="radio" name="category" {{$cat[0]}} value="pns" required onclick="show_form()"><b>ASN</b>
 					</label>
+					<!-- <label class="radio-inline">
+						<input type="radio" name="category" {{$cat[1]}} value="dosen" onclick="show_form()"><b>Dosen</b>
+					</label> -->
+					<label class="radio-inline">
+						<input type="radio" name="category" {{$cat[2]}} value="mhs" onclick="show_form()"><b>Mahasiswa</b>
+					</label>
+					<!-- <label class="radio-inline">
+						<input type="radio" name="category" {{$cat[3]}} value="umum" onclick="show_form()"><b>Lainnya</b>
+					</label> -->
 				</div>
 
 				<div class="form-group" id="div-instansi">
@@ -491,22 +506,31 @@
 				// $('input[name=jenjang]').prop('required',false);
 				$('#div-pendidikan-terakhir').hide();
 				$('input[name=pendidikan_terakhir]').removeAttr('required');
-			break;			
+			break;
+			case 'dosen':
+				unit = 'Nama Universitas';
+				label = 'NIP';
+			break;
 			case 'mhs':
-				unit = 'Nama Universitas/Instansi';
-				label = 'NIM/NIDN/NIP';
+				unit = 'Nama Universitas';
+				label = 'NIM';
 				$("#unit_kerja").removeAttr('required');
 				$('#div-instansi').show();
 				$('#div-no-identitas').show();
 				$('#div-kerja').hide();
-				$('#div-jenjang').hide();
+				$('#div-jenjang').show();
 				// $('input[name=jenjang]').prop('required',true);
-				$('#div-pendidikan-terakhir').hide();
-				$('input[name=pendidikan_terakhir]').removeAttr('required');
-				$('#div-pangkat-golongan').hide();
-				$('input[name=pangkat_golongan]').removeAttr('required');
-				$('#div-jabatan').hide();
-				$('input[name=jabatan]').removeAttr('required');
+				$('#div-pendidikan-terakhir').show();
+				$('input[name=pendidikan_terakhir]').attr('required', '');
+			break;
+			case 'umum':
+				unit = 'Nama Instansi';
+				label = 'NIK';
+				kerja = 'Unit Kerja';
+				$("#unit_kerja").attr('required', ''); 
+				$('#div-instansi').show();
+				$('#div-no-identitas').show();
+				$('#div-kerja').show();
 			break;
 			default:
 				unit = '';

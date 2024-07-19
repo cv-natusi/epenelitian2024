@@ -22,7 +22,7 @@ Route::group(['prefix'=>'api'],function(){
   Route::post('get_tempat','APIController@get_tempat');
   Route::post('get_tempat_b','APIController@get_tempat_b');
   Route::get('cetak_surat_ijin-{permohonan}-{kategori}','APIController@cetak_surat');
-  Route::post('view_surat','APIController@view_surat')->name('view-surat-ijin');
+  Route::get('view_surat_ijin-{permohonan}-{kategori}','APIController@view_surat');
   Route::post('konfirmasi_pengambilan','APIController@konfirmasi_pengambilan');
 });
 
@@ -200,7 +200,7 @@ Route::group(['middleware'=>'admin'],function(){
       Route::post('/tolak_pengajuan','Owner\PengajuanController@tolak_pengajuan')->name('tolak_pengajuan');
 
       #new 
-      Route::post('/batal_terima_pengajuan','Owner\PengajuanController@batal_terima_pengajuan')->name('batal_terima_pengajuan');
+      Route::post('/batal_pengajuan','Owner\PengajuanController@batal_pengajuan')->name('batal_pengajuan');
 
       Route::post('/send_notif','Owner\PengajuanController@send_notif')->name('send_notif');
 

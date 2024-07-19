@@ -410,18 +410,17 @@
               }else{
                 menu+='<li><a href="javascript:void(0)" onclick="modal_upload_surat_izin(\''+rowData.id_permohonan+'\')"><i class="fa fa-file"></i> Lihat Surat Ijin</a></li>';
                 menu+='<li onclick="batal_terima(\''+rowData.id_permohonan+'\')"><a href="javascript:void(0);"><i class="fa fa-close"></i> Batal Terima</a></li>';
-              }
-              // if(rowData.tempat_penelitian.indexOf(rowData.unit_kerja)>=0){
                 menu+='<li><a href="{{url('/')}}/api/cetak_surat_ijin-'+rowData.id_permohonan+'-nota" target="_blank"><i class="fa fa-print"></i> Cetak Nota Dinas</a></li>';
-              // }
+                menu+='<li><a href="{{url('/')}}/api/cetak_surat_ijin-'+rowData.id_permohonan+'-surat" target="_blank"><i class="fa fa-print"></i> Cetak Surat</a></li>';
+                // menu+='<li><a href="{{url('/')}}/api/view_surat_ijin-'+rowData.id_permohonan+'-surat" target="_blank"><i class="fa fa-eye"></i> View Surat Ijin</a></li>';
+                // menu+='<li><a href="{{url('/')}}/api/view_surat_ijin-'+rowData.id_permohonan+'-nota" target="_blank"><i class="fa fa-eye"></i> View Nota Dinas</a></li>';
+              }              
               // if(rowData.tgl_ambil=='' || rowData.tgl_ambil==null){
               //   menu+='<li><a href="javascript:void(0)" onclick="konfirmasi_pengambilan(\''+rowData.id_permohonan+'\')"><i class="fa fa-check"></i> Konfirmasi Pengambilan Surat</a></li>';
               // }
             @endif
           @endif
-          // menu+='<li><a href="{{url('/')}}/api/view_surat_ijin-'+rowData.id_permohonan+'-surat" target="_blank"><i class="fa fa-eye"></i> View Surat Ijin</a></li>';
           // if(rowData.tempat_penelitian.indexOf(rowData.unit_kerja)>=0){
-            menu+='<li><a href="{{url('/')}}/api/view_surat_ijin-'+rowData.id_permohonan+'-nota" target="_blank"><i class="fa fa-eye"></i> View Nota Dinas</a></li>';
           // }
           menu+='</ul>' +
           '</div>';
@@ -507,10 +506,11 @@
         var menu =
           '<div class="btn-group">' +
           '<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i></a>' +
-          '<ul class="dropdown-menu pull-right">' +
+          '<ul class="dropdown-menu pull-right">';
           // '<li onclick="view_accept(' + rowIndex + ')"><a href="javascript:void(0);"><i class="fa fa-eye"></i> View Details</a></li>' +
           // '<li onclick="detail_accept(' + rowIndex + ')"><a href="javascript:void(0);"><i class="fa fa-pencil"></i> Keterangan</a></li>' +
-          '<li onclick="delete_permohonan(' + rowIndex + ')"><a href="javascript:void(0);"><i class="fa fa-trash-o"></i> Delete</a></li>' +
+          // menu+='<li onclick="delete_permohonan(\''+rowData.id_permohonan+'\')"><a href="javascript:void(0);"><i class="fa fa-close"></i> Hapus Pengajuan</a></li>';
+          menu+='<li onclick="batal_tolak(\''+rowData.id_permohonan+'\')"><a href="javascript:void(0);"><i class="fa fa-close"></i> Batal Tolak</a></li>';          
           '</ul>' +
           '</div>';
         return menu;
@@ -605,7 +605,7 @@
 
     function terima_pengajuan(rowIndex){
         var rowData = datagridterima.getRowData(rowIndex);
-        $.post("{!! route('batal_terima_pengajuan') !!}",{id:rowData.id_permohonan}).done(function(data){
+        $.post("{!! route('terima_pengajuan') !!}",{id:rowData.id_permohonan}).done(function(data){
         $('.loading').hide();
         if(data.status == 'success'){
           datagridterima.reload();
@@ -631,14 +631,26 @@
     }
 
     function batal_terima(rowIndex){
-        var rowData = datagridmenunggu.getRowData(rowIndex);
-        $.post("{!! route('terima_pengajuan') !!}",{id:rowData.id_permohonan}).done(function(data){
+        $.post("{!! route('batal_pengajuan') !!}",{id_permohonan:rowIndex}).done(function(data){
         $('.loading').hide();
         if(data.status == 'success'){
-          datagridmenunggu.reload();
-          swal("Success","Pengajuan ini Diterima","success");
+          datagridterima.reload();
+          swal("Success","Berhasil Dibatalkan","success");
         } else if(data.status=='fail'){
-          swal("Maaf","Ini bukan berita milik anda !","error");
+          swal("Maaf","Gagal DI Proses!","error");
+        } else {
+        }
+      });
+    }
+
+    function batal_tolak(rowIndex){
+        $.post("{!! route('batal_pengajuan') !!}",{id_permohonan:rowIndex}).done(function(data){
+        $('.loading').hide();
+        if(data.status == 'success'){
+          datagridtolak.reload();
+          swal("Success","Berhasil Dibatalkan","success");
+        } else if(data.status=='fail'){
+          swal("Maaf","Gagal DI Proses!","error");
         } else {
         }
       });
@@ -658,14 +670,14 @@
       function(){
         $.post("{!! route('delete_permohonan') !!}",{id:id_permohonan}).done(function(data){
           if(data.status == 'success'){
-            datagridtolak.reload();
-            swal("Success!", "Jenis Penelitian telah dihapus !", "success");
+            datagridmenunggu.reload();
+            swal("Success!", "Pengajuan telah dihapus !", "success");
           }else if(data.status=='fail'){
-            datagridtolak.reload();
-            swal("Maaf!", "Anda bukan pemilik berita ini !", "error");
+            datagridmenunggu.reload();
+            swal("Maaf!", "Anda bukan pemilik data ini !", "error");
           }else{
-            datagridtolak.reload();
-            swal("Maaf!", "Berita telah dihapus sebelum ini !", "error");
+            datagridmenunggu.reload();
+            swal("Maaf!", "Data telah dihapus sebelum ini !", "error");
           }
         });
       });

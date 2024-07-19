@@ -65,7 +65,6 @@ class FilePendukungController extends Controller
         $saveprh->tgl_surat_rekom = date('Y-m-d',strtotime($request->tgl_surat_rekom));
         $saveprh->nomor_surat_rekom = $request->nomor_surat_rekom;
         $saveprh->pendidikan = $request->pendidikan;
-
         $saveprh->save();
 
         if ($saveprh) {
@@ -446,7 +445,7 @@ class FilePendukungController extends Controller
       $permohonan = Permohonan::join('item_permohonan as item', 'item.permohonan_id', 'permohonan.id_permohonan')
                   ->where('id_permohonan', $id)
                   ->get();
-    // return $permohonan;
+      // return $permohonan;
 
       //
       // if ($get_doc!=0) {
