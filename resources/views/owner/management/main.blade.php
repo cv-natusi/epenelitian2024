@@ -52,6 +52,10 @@
           </ul>
           <div class="tab-content p-b-0">
             <div role="tabpanel" class="tab-pane fade active in" id="data-pemohon">
+              <button type="button" class="btn btn-sm btn-primary user-add pull-left" id="user-add">
+                <span class="fa fa-plus"></span> Tambah Data User
+              </button>               
+              <div class="col-md-4 col-sm-4 col-xs-12 form-inline main-layer p-10 m-b-0"></div>
               <!-- Search -->
               <div class="col-md-4 col-sm-4 col-xs-12 form-inline pull-right panelSearch p-10 m-b-0">
                 <div class="col-md-6 col-sm-6 col-xs-12 m-b-0">
@@ -209,7 +213,7 @@
 	        '<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i></a>' +
 	        '<ul class="dropdown-menu pull-right">' +
 	        '<li onclick="detailUser(' + rowIndex + ')"><a href="javascript:void(0);"><i class="fa fa-eye"></i> View</a></li>' +
-	        // '<li onclick="updateUser(' + rowIndex + ')"><a href="javascript:void(0);"><i class="fa fa-pencil"></i> Edit</a></li>' +
+	        '<li onclick="updateUser(' + rowIndex + ')"><a href="javascript:void(0);"><i class="fa fa-pencil"></i> Edit</a></li>' +
 	        '<li onclick="hapusUser(' + rowIndex + ')"><a href="javascript:void(0);"><i class="fa fa-trash-o"></i> Delete</a></li>' +
 	        '</ul>' +
 	        '</div>';
@@ -396,6 +400,19 @@
       $('.loading').show();
       $('.main-layer').hide();
       $.post("{!! route('addUserPkm') !!}").done(function(data){
+        if(data.status == 'success'){
+          $('.loading').hide();
+          $('.other-page').html(data.content).fadeIn();
+        } else {
+          $('.main-layer').show();
+        }
+      });
+    });
+
+    $('.user-add').click(function(){
+      $('.loading').show();
+      $('.main-layer').hide();
+      $.post("{!! route('addUserPhm') !!}").done(function(data){
         if(data.status == 'success'){
           $('.loading').hide();
           $('.other-page').html(data.content).fadeIn();
