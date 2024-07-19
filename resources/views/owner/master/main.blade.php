@@ -163,7 +163,7 @@
                 <li><a href="{{route('contact')}}">Contact</a></li>
                 <li><a href="{{route('announcement')}}">Announcement</a></li>
                 <li><a href="{{route('bahasa')}}">Update Bahasa</a></li>
-                {{-- <li><a href="{{route('lembar_konfirmasi')}}">Lembar Konfirmasi</a></li> --}}
+                <li><a href="{{route('lembar_konfirmasi')}}">Lembar Konfirmasi</a></li>
                 <li><a href="{{route('jenis_penelitian')}}">Tambah Jenis Penelitian</a></li>
                 <li><a href="{{route('jenis_file_pendukung')}}">Tambah Jenis File Pendukung</a></li>
               </ul>
@@ -252,7 +252,7 @@
                   <li><a href="{{route('contact')}}">Contact</a></li>
                   <li><a href="{{route('announcement')}}">Announcement</a></li>
                   <li><a href="{{route('bahasa')}}">Update Bahasa</a></li>
-                  {{-- <li><a href="{{route('lembar_konfirmasi')}}">Lembar Konfirmasi</a></li> --}}
+                  <li><a href="{{route('lembar_konfirmasi')}}">Lembar Konfirmasi</a></li>
                   <li><a href="{{route('tempat_penelitian')}}">Tempat Penelitian</a></li>
                   <li><a href="{{route('jenis_penelitian')}}">Tambah Jenis Penelitian</a></li>
                   <li><a href="{{route('jenis_file_pendukung')}}">Tambah Jenis File Pendukung</a></li>

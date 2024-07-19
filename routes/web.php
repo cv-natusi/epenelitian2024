@@ -199,6 +199,9 @@ Route::group(['middleware'=>'admin'],function(){
       Route::post('/terima_pengajuan','Owner\PengajuanController@terima_pengajuan')->name('terima_pengajuan');
       Route::post('/tolak_pengajuan','Owner\PengajuanController@tolak_pengajuan')->name('tolak_pengajuan');
 
+      #new 
+      Route::post('/batal_terima_pengajuan','Owner\PengajuanController@batal_terima_pengajuan')->name('batal_terima_pengajuan');
+
       Route::post('/send_notif','Owner\PengajuanController@send_notif')->name('send_notif');
 
       Route::post('/doc_pendukung','Owner\PengajuanController@doc_pendukung')->name('doc_pendukung');

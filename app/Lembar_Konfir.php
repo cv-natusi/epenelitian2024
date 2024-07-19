@@ -9,7 +9,7 @@ class Lembar_Konfir extends Model
 {
     protected $table = 'lembar_konfirmasi';
     protected $primaryKey = 'id_lembar';
-    public $timestamps = true ;
+    public $timestamps = false;
 
     public static function datagridlembar_konfir($input)
     {

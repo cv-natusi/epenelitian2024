@@ -37,9 +37,17 @@ class FilePendukungController extends Controller
 
     public function store_permohonan_b(Request $request)
     {
+      return $request->all();
       if(empty($request -> id_permohonan)){
         $validator=Validator::make($request->all(),[
-          'judul_penelitian' => 'required',
+          'judul_penelitian'      => 'required',
+          'tgl_surat_pimpinan'    => 'required',
+          'nomor_surat_pimpinan'  => 'required',
+          'tgl_surat_rekom'       => 'required',
+          'nomor_surat_rekom'     => 'required',
+          'pendidikan'            => 'required',
+          'tgl_awal'              => 'required',
+          'tgl_akhir'             => 'required',
         ]);
 
         $saveprh = new Permohonan;
@@ -50,8 +58,14 @@ class FilePendukungController extends Controller
         $saveprh->tgl_awal = date('Y-m-d',strtotime($request->tgl_awal));
         $saveprh->tgl_akhir = date('Y-m-d',strtotime($request->tgl_akhir));
         $saveprh->tgl_pengajuan = date('Y-m-d');
-
         $saveprh->tgl_ambil = date('Y-m-d');
+
+        $saveprh->tgl_surat_pimpinan  = date('Y-m-d',strtotime($request->tgl_surat_pimpinan));
+        $saveprh->nomor_surat_pimpinan = $request->nomor_surat_pimpinan;
+        $saveprh->tgl_surat_rekom = date('Y-m-d',strtotime($request->tgl_surat_rekom));
+        $saveprh->nomor_surat_rekom = $request->nomor_surat_rekom;
+        $saveprh->pendidikan = $request->pendidikan;
+
         $saveprh->save();
 
         if ($saveprh) {
@@ -62,7 +76,7 @@ class FilePendukungController extends Controller
           $item_permohonan->acc_admin = "Terima";
           $item_permohonan->acc_kasi = "Terima";
           $item_permohonan->tgl_acc_admin = date('Y-m-d');
-          $item_permohonan->tgl_acc_kasi = date('Y-m-d');
+          $item_permohonan->tgl_acc_kasi = date('Y-m-d');          
           $item_permohonan->save();
 
           $getID = User::where('id', Auth::User()->id)->first();
@@ -93,12 +107,17 @@ class FilePendukungController extends Controller
 
     public function store_permohonan_c(Request $request)
     {
-      // return $request->all();
+      return $request->all();
       if(empty($request -> id_permohonan)){
         $validator=Validator::make($request->all(),[
-          'judul_penelitian' => 'required',
-          'tgl_awal'         => 'required',
-          'tgl_akhir'        => 'required',
+          'judul_penelitian'      => 'required',
+          'tgl_surat_pimpinan'    => 'required',
+          'nomor_surat_pimpinan'  => 'required',
+          'tgl_surat_rekom'       => 'required',
+          'nomor_surat_rekom'     => 'required',
+          'pendidikan'            => 'required',
+          'tgl_awal'              => 'required',
+          'tgl_akhir'             => 'required',
         ]);
 
         $saveprh = new Permohonan;
@@ -109,6 +128,13 @@ class FilePendukungController extends Controller
         $saveprh->tgl_akhir = date('Y-m-d',strtotime($request->tgl_akhir));
         $saveprh->users_id = Auth::User()->id;
         $saveprh->status = "Menunggu Admin";
+
+        $saveprh->tgl_surat_pimpinan  = $request->tgl_surat_pimpinan;
+        $saveprh->nomor_surat_pimpinan = $request->nomor_surat_pimpinan;
+        $saveprh->tgl_surat_rekom = $request->tgl_surat_rekom;
+        $saveprh->nomor_surat_rekom = $request->nomor_surat_rekom;
+        $saveprh->pendidikan = $request->pendidikan;
+
         $saveprh->save();
           
         if ($saveprh) {
@@ -258,9 +284,14 @@ class FilePendukungController extends Controller
     {
       // return $request->all();
       $validator=Validator::make($request->all(),[
-        'judul_penelitian' => '',
-        'tgl_awal'         => '',
-        'tgl_akhir'        => '',
+          'judul_penelitian'      => 'required',
+          'tgl_surat_pimpinan'    => 'required',
+          'nomor_surat_pimpinan'  => 'required',
+          'tgl_surat_rekom'       => 'required',
+          'nomor_surat_rekom'     => 'required',
+          'pendidikan'            => 'required',
+          'tgl_awal'              => 'required',
+          'tgl_akhir'             => 'required',        
       ]);
       if(!$validator->fails()){
         DB::beginTransaction();
@@ -276,6 +307,13 @@ class FilePendukungController extends Controller
         $saveprh->tgl_akhir = date('Y-m-d',strtotime($request->tgl_akhir));
         $saveprh->users_id = Auth::User()->id;
         $saveprh->status = "Menunggu Admin";
+
+        $saveprh->tgl_surat_pimpinan  = $request->tgl_surat_pimpinan;
+        $saveprh->nomor_surat_pimpinan = $request->nomor_surat_pimpinan;
+        $saveprh->tgl_surat_rekom = $request->tgl_surat_rekom;
+        $saveprh->nomor_surat_rekom = $request->nomor_surat_rekom;
+        $saveprh->pendidikan = $request->pendidikan;
+
         $save_saveprh = $saveprh->save();
 
         if ($save_saveprh) {

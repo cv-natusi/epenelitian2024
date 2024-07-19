@@ -654,15 +654,17 @@ class PengajuanController extends Controller
   {
     $id = $request->id;
     $do_delete = Permohonan::find($id);
-    $do_delete_item = ItemPermohonan::where('permohonan_id',$id)->first();
+    return $do_delete_item = ItemPermohonan::where('permohonan_id',$id)->get();
           // Delete Dulu File Lama
     if(!empty($do_delete)){
+
       $destinationPath = 'uploads/file_upload_persyaratan';
       File::delete($destinationPath.'/'.$do_delete_item->upload_proposal_penelitian, 
       $destinationPath.'/'.$do_delete_item->upload_surat_pengantar, 
       $destinationPath.'/'.$do_delete_item->upload_surat_rekomendasi, 
       $destinationPath.'/'.$do_delete_item->upload_surat_pernyataan, 
       $destinationPath.'/'.$do_delete_item->upload_surat_kesediaan);      
+      
       $do_delete_item->delete();
       $do_delete->delete();
       return ['status' => 'success'];
@@ -767,6 +769,24 @@ class PengajuanController extends Controller
     $data = array_merge($data,$menu);
     $content = view('owner.pengajuan.modal_upload_surat_izin',$data)->render();
     return ['content' => $content, 'status' => 'success'];
+  }
+
+  #batal terima
+  public function batal_terima_pengajuan(Request $request)
+  {
+    $terima = Permohonan::where("id_permohonan",$request->id)->update(['status' => 'Menunggu Admin']);
+    if($terima){
+      $item_permohonan = ItemPermohonan::where('permohonan_id',$request->id)
+      ->update([
+        'doc_status' => 'Pending',
+        'acc_admin' => 'Menunggu'
+        ])
+      ;
+      
+      return ['status' => 'success'];
+    }else{
+      return ['status'=>'error'];
+    }
   }
 
 }

@@ -279,6 +279,7 @@
       pageInfoElement         : '#info-menunggu',
       columns                 : [
         {field: 'judul_penelitian', title: 'Judul Penelitian', editable: false, sortable: true, width: 130, align: 'left', search: true},
+        {field: 'tgl_pengajuan', title: 'Tanggal Pengajuan', editable: false, sortable: true, width: 150, align: 'left', search: true},
         {field: 'nama_lengkap', title: 'Nama Lengkap', editable: false, sortable: true, width: 100, align: 'left', search: true},
         {field: 'nama_tempat_penelitian', title: 'Tempat Penelitian', editable: false, sortable: true, width: 150, align: 'left', search: true},
         // {field: 'status_verifikasi', title: 'Status Tempat Penelitian', editable: false, sortable: true, width: 80, align: 'center', search: true},
@@ -306,6 +307,7 @@
       pageInfoElement         : '#info-terima',
       columns                 : [
         {field: 'judul_penelitian', title: 'Judul Penelitian', editable: false, sortable: true, width: 130, align: 'left', search: true},
+        {field: 'tgl_pengajuan', title: 'Tanggal Pengajuan', editable: false, sortable: true, width: 150, align: 'left', search: true},
         {field: 'nama_lengkap', title: 'Nama Lengkap', editable: false, sortable: true, width: 130, align: 'left', search: true},
         // {field: 'nama_jenis', title: 'Jenis Penelitian', editable: false, sortable: true, width: 100, align: 'left', search: true},
         {field: 'nama_tempat_penelitian', title: 'Tempat Penelitian', editable: false, sortable: true, width: 150, align: 'left', search: true},
@@ -341,6 +343,7 @@
       pageInfoElement         : '#info-tolak',
       columns                 : [
         {field: 'judul_penelitian', title: 'Judul Penelitian', editable: false, sortable: true, width: 130, align: 'left', search: true},
+        {field: 'tgl_pengajuan', title: 'Tanggal Pengajuan', editable: false, sortable: true, width: 150, align: 'left', search: true},
         {field: 'nama_lengkap', title: 'Nama Lengkap', editable: false, sortable: true, width: 130, align: 'left', search: true},
         {field: 'nama_tempat_penelitian', title: 'Tempat Penelitian', editable: false, sortable: true, width: 150, align: 'left', search: true},
         {field: 'status_verifikasi', title: 'Status Tempat Penelitian', editable: false, sortable: true, width: 80, align: 'center', search: true},
@@ -362,6 +365,8 @@
           
           @if(Auth::getUser()->level!=6)
           '<li onclick="detail_peneliti(' + rowData.id_permohonan + ')"><a href="javascript:void(0);"><i class="fa fa-eye"></i> View Details</a></li>' +
+          '<li onclick="delete_permohonan(\''+rowData.id_permohonan+'\')"><a href="javascript:void(0);"><i class="fa fa-close"></i> Hapus</a></li>'+
+
           @endif
 
           @if(Auth::getUser()->level==6)
@@ -404,9 +409,10 @@
                 menu+='<li><a href="javascript:void(0)" onclick="modal_upload_surat_izin(\''+rowData.id_permohonan+'\')"><i class="fa fa-upload"></i> Upload Surat Ijin</a></li>';
               }else{
                 menu+='<li><a href="javascript:void(0)" onclick="modal_upload_surat_izin(\''+rowData.id_permohonan+'\')"><i class="fa fa-file"></i> Lihat Surat Ijin</a></li>';
+                menu+='<li onclick="batal_terima(\''+rowData.id_permohonan+'\')"><a href="javascript:void(0);"><i class="fa fa-close"></i> Batal Terima</a></li>';
               }
               // if(rowData.tempat_penelitian.indexOf(rowData.unit_kerja)>=0){
-              //   menu+='<li><a href="{{url('/')}}/api/cetak_surat_ijin-'+rowData.id_permohonan+'-nota" target="_blank"><i class="fa fa-print"></i> Cetak Nota Dinas</a></li>';
+                menu+='<li><a href="{{url('/')}}/api/cetak_surat_ijin-'+rowData.id_permohonan+'-nota" target="_blank"><i class="fa fa-print"></i> Cetak Nota Dinas</a></li>';
               // }
               // if(rowData.tgl_ambil=='' || rowData.tgl_ambil==null){
               //   menu+='<li><a href="javascript:void(0)" onclick="konfirmasi_pengambilan(\''+rowData.id_permohonan+'\')"><i class="fa fa-check"></i> Konfirmasi Pengambilan Surat</a></li>';
@@ -415,7 +421,7 @@
           @endif
           // menu+='<li><a href="{{url('/')}}/api/view_surat_ijin-'+rowData.id_permohonan+'-surat" target="_blank"><i class="fa fa-eye"></i> View Surat Ijin</a></li>';
           // if(rowData.tempat_penelitian.indexOf(rowData.unit_kerja)>=0){
-          //   menu+='<li><a href="{{url('/')}}/api/view_surat_ijin-'+rowData.id_permohonan+'-nota" target="_blank"><i class="fa fa-eye"></i> View Nota Dinas</a></li>';
+            menu+='<li><a href="{{url('/')}}/api/view_surat_ijin-'+rowData.id_permohonan+'-nota" target="_blank"><i class="fa fa-eye"></i> View Nota Dinas</a></li>';
           // }
           menu+='</ul>' +
           '</div>';
@@ -562,8 +568,6 @@
       });
     }
 
-
-
     function detail_hasil(rowIndex){
       $('.loading').show();
       $('.main-layer').hide();
@@ -580,7 +584,6 @@
         }
       });
     }
-
 
     function cetak_konfir(rowIndex){
       var rowData = datagridterima.getRowData(rowIndex);
@@ -600,36 +603,48 @@
       });
     }
 
-
-     function terima_pengajuan(rowIndex){
-        var rowData = datagridmenunggu.getRowData(rowIndex);
-        $.post("{!! route('terima_pengajuan') !!}",{id:rowData.id_permohonan}).done(function(data){
-      $('.loading').hide();
-      if(data.status == 'success'){
-        datagridmenunggu.reload();
-        swal("Success","Pengajuan ini Diterima","success");
-      } else if(data.status=='fail'){
-        swal("Maaf","Ini bukan berita milik anda !","error");
-      } else {
-      }
-    });
-  }
+    function terima_pengajuan(rowIndex){
+        var rowData = datagridterima.getRowData(rowIndex);
+        $.post("{!! route('batal_terima_pengajuan') !!}",{id:rowData.id_permohonan}).done(function(data){
+        $('.loading').hide();
+        if(data.status == 'success'){
+          datagridterima.reload();
+          swal("Success","Pengajuan ini Diterima","success");
+        } else if(data.status=='fail'){
+          swal("Maaf","Ini bukan berita milik anda !","error");
+        } else {
+        }
+      });
+    }
      function tolak_pengajuan(rowIndex){
         var rowData = datagridmenunggu.getRowData(rowIndex);
         $.post("{!! route('tolak_pengajuan') !!}",{id:rowData.id_permohonan}).done(function(data){
-      $('.loading').hide();
-      if(data.status == 'success'){
-        datagridmenunggu.reload();
-        swal("Success","Pengajuan ini Ditolak","success");
-      } else if(data.status=='fail'){
-        swal("Maaf","Ini bukan berita milik anda !","error");
-      } else {
-      }
-    });
-  }
+        $('.loading').hide();
+        if(data.status == 'success'){
+          datagridmenunggu.reload();
+          swal("Success","Pengajuan ini Ditolak","success");
+        } else if(data.status=='fail'){
+          swal("Maaf","Ini bukan berita milik anda !","error");
+        } else {
+        }
+      });
+    }
 
-  function delete_permohonan(rowIndex){
-    var rowData = datagridtolak.getRowData(rowIndex);
+    function batal_terima(rowIndex){
+        var rowData = datagridmenunggu.getRowData(rowIndex);
+        $.post("{!! route('terima_pengajuan') !!}",{id:rowData.id_permohonan}).done(function(data){
+        $('.loading').hide();
+        if(data.status == 'success'){
+          datagridmenunggu.reload();
+          swal("Success","Pengajuan ini Diterima","success");
+        } else if(data.status=='fail'){
+          swal("Maaf","Ini bukan berita milik anda !","error");
+        } else {
+        }
+      });
+    }
+
+  function delete_permohonan(id_permohonan){
       swal({
         title:"Hapus Jenis Penelitian",
         text:"Apakah anda yakin ?",
@@ -641,7 +656,7 @@
         closeOnConfirm: false
       },
       function(){
-        $.post("{!! route('delete_permohonan') !!}",{id:rowData.id_permohonan}).done(function(data){
+        $.post("{!! route('delete_permohonan') !!}",{id:id_permohonan}).done(function(data){
           if(data.status == 'success'){
             datagridtolak.reload();
             swal("Success!", "Jenis Penelitian telah dihapus !", "success");

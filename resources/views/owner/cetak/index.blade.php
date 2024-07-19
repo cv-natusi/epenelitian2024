@@ -15,6 +15,6 @@
   <script type="text/javascript">
   window.focus();
   window.print();
-  setTimeout(function () { window.close(); }, 100);
+  // setTimeout(function () { window.close(); }, 100);
   </script>
 </html>
