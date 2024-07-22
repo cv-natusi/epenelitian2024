@@ -135,10 +135,7 @@ class APIController extends Controller
   function generate_surat($id_permohonan,$kategori){
     // return $kategori;
     $get_surat = Lembar_Konfir::where('keterangan',$kategori)->first();
-    // $get_surat = Lembar_Konfir::find($kategori);
-
-    $bakes = ItemPermohonan::where('jenis_file_id',3)->where('permohonan_id',$id_permohonan)->first();
-    $pengantar = ItemPermohonan::where('jenis_file_id',2)->where('permohonan_id',$id_permohonan)->first();
+    // $get_surat = Lembar_Konfir::find($kategori);    
 
     $permohonan = Permohonan::leftjoin('profiles as p','p.users_id','permohonan.users_id')->where('id_permohonan',$id_permohonan)->first();
     $surat = $get_surat->form_konfirmasi;
@@ -165,7 +162,8 @@ class APIController extends Controller
       }
     }
     $pakai_surat = str_replace('[[instansi-tujuan]]',$kepada,$pakai_surat);
-    $pakai_surat = str_replace('[[kop-surat]]',url('/')."/images/KOP_SIP_Besar.png",$pakai_surat);
+    $pakai_surat = str_replace('[[header]]',url('/')."/images/sidoarjo-black-white-seek-logo.png",$pakai_surat);
+    $pakai_surat = str_replace('[[footer]]',url('/')."/images/bsre-logo.png",$pakai_surat);
     $pakai_surat = str_replace('[[tahun-pengajuan]]',date('Y',strtotime($permohonan->tgl_pengajuan)),$pakai_surat);
     $pakai_surat = str_replace('[[nama]]',$nama,$pakai_surat);
     $pakai_surat = str_replace('[[instansi-asal]]',$permohonan->unit_kerja,$pakai_surat);
@@ -185,13 +183,11 @@ class APIController extends Controller
     $pakai_surat = str_replace('[[waktu-penelitian]]',Formatter::tanggal_indo($permohonan->tgl_awal).' s.d. '.Formatter::tanggal_indo($permohonan->tgl_akhir),$pakai_surat);
     $pakai_surat = str_replace('[[judul-penelitian]]',$permohonan->judul_penelitian,$pakai_surat);
     $pakai_surat = str_replace('[[pendidikan]]',$permohonan->pendidikan_terakhir,$pakai_surat);
-    $pakai_surat = str_replace('[[no-surat-pengantar]]',$pengantar->no_surat,$pakai_surat);
-    $pakai_surat = str_replace('[[tanggal-pengantar]]',$pengantar->tanggal_surat,$pakai_surat);
-    $pakai_surat = str_replace('[[jabatan-pj]]',$pengantar->jabatan_pj,$pakai_surat);
-    $pakai_surat = str_replace('[[no-bakesbangpol]]',1,$pakai_surat);
-    // $pakai_surat = str_replace('[[no-bakesbangpol]]',$bakes->no_surat,$pakai_surat);
-    $pakai_surat = str_replace('[[tanggal-bakesbangpol]]',"2024-07-18",$pakai_surat);
-    // $pakai_surat = str_replace('[[tanggal-bakesbangpol]]',$bakes->tanggal_surat,$pakai_surat);
+    $pakai_surat = str_replace('[[no-surat-pengantar]]',$permohonan->nomor_surat_pimpinan,$pakai_surat);
+    $pakai_surat = str_replace('[[tanggal-pengantar]]',Formatter::tanggal_indo($permohonan->tgl_surat_pimpinan),$pakai_surat);
+    $pakai_surat = str_replace('[[jabatan-pj]]',$permohonan->jabatan_pj,$pakai_surat);
+    $pakai_surat = str_replace('[[no-bakesbangpol]]',$permohonan->nomor_surat_rekom,$pakai_surat);    
+    $pakai_surat = str_replace('[[tanggal-bakesbangpol]]',Formatter::tanggal_indo($permohonan->tgl_surat_rekom),$pakai_surat);    
 
     return $pakai_surat;
   }

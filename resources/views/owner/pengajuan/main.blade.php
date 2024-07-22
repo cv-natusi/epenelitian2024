@@ -280,7 +280,7 @@
       columns                 : [
         {field: 'judul_penelitian', title: 'Judul Penelitian', editable: false, sortable: true, width: 130, align: 'left', search: true},
         {field: 'tgl_pengajuan', title: 'Tanggal Pengajuan', editable: false, sortable: true, width: 150, align: 'left', search: true},
-        {field: 'nama_lengkap', title: 'Nama Lengkap', editable: false, sortable: true, width: 100, align: 'left', search: true},
+        {field: 'first_name', title: 'Nama Lengkap', editable: false, sortable: true, width: 100, align: 'left', search: true},
         {field: 'nama_tempat_penelitian', title: 'Tempat Penelitian', editable: false, sortable: true, width: 150, align: 'left', search: true},
         // {field: 'status_verifikasi', title: 'Status Tempat Penelitian', editable: false, sortable: true, width: 80, align: 'center', search: true},
         @if(Auth::getUser()->level!=6)
@@ -308,7 +308,7 @@
       columns                 : [
         {field: 'judul_penelitian', title: 'Judul Penelitian', editable: false, sortable: true, width: 130, align: 'left', search: true},
         {field: 'tgl_pengajuan', title: 'Tanggal Pengajuan', editable: false, sortable: true, width: 150, align: 'left', search: true},
-        {field: 'nama_lengkap', title: 'Nama Lengkap', editable: false, sortable: true, width: 130, align: 'left', search: true},
+        {field: 'first_name', title: 'Nama Lengkap', editable: false, sortable: true, width: 130, align: 'left', search: true},
         // {field: 'nama_jenis', title: 'Jenis Penelitian', editable: false, sortable: true, width: 100, align: 'left', search: true},
         {field: 'nama_tempat_penelitian', title: 'Tempat Penelitian', editable: false, sortable: true, width: 150, align: 'left', search: true},
         // {field: 'status_verifikasi', title: 'Status Tempat Penelitian', editable: false, sortable: true, width: 80, align: 'center', search: true},
@@ -344,7 +344,7 @@
       columns                 : [
         {field: 'judul_penelitian', title: 'Judul Penelitian', editable: false, sortable: true, width: 130, align: 'left', search: true},
         {field: 'tgl_pengajuan', title: 'Tanggal Pengajuan', editable: false, sortable: true, width: 150, align: 'left', search: true},
-        {field: 'nama_lengkap', title: 'Nama Lengkap', editable: false, sortable: true, width: 130, align: 'left', search: true},
+        {field: 'first_name', title: 'Nama Lengkap', editable: false, sortable: true, width: 130, align: 'left', search: true},
         {field: 'nama_tempat_penelitian', title: 'Tempat Penelitian', editable: false, sortable: true, width: 150, align: 'left', search: true},
         {field: 'status_verifikasi', title: 'Status Tempat Penelitian', editable: false, sortable: true, width: 80, align: 'center', search: true},
         {field: 'status', title: 'Status Permohonan', editable: false, sortable: true, width: 50, align: 'left', search: true},

@@ -120,4 +120,77 @@ class RegistrationController extends Controller
             return Redirect::route('login');
     	}
     }
+
+    public function reset_password(Request $request)
+    {
+        $data = [
+            'id_menu' => '4',
+            ];
+        return view('login.reset_password',$data);
+    }
+
+    public function cek_resetwa(Request $request)
+    {                        
+        $no_wa = str_replace(' ', '', $request->no_wa);
+
+        $user = Profile::where('phone', $no_wa)
+        ->where('email',$request->email)        
+        ->first();      
+          
+          if (!empty($user)) {
+            $return = ['status' => 'success', 'code' => '200', 'message' => 'Data Ditemukan !!', 'data' => $user];
+          }else{
+            $return = ['status' => 'error', 'code' => '404', 'message' => 'Data Tidak Ditemukan !!', 'data' => ''];
+          }
+          return response()->json($return);        
+    }
+
+    public function store_resetpassword(Request $request)
+    {
+        // return $request->all();
+        $getUser = Profile::where('phone',$request->no_wa)
+        ->where('email',$request->email)
+        ->first();
+
+        if (!empty($getUser)) {
+            $data = [                
+                'id_profile'=>$getUser->id,
+                'email'=>$getUser->email,
+                'phone'=>$getUser->phone,
+            ];
+            $tujuan = $getUser->email;
+            
+            $sendMail = Mail::send('emails.reset_password', $data, function ($mail) use ($tujuan) {
+                        $mail->to($tujuan);                        
+                        $mail->subject('Verifikasi! Reset Password');
+            });
+
+            Session::flash('pesan','You have succeeded to Send Reset Password, Please Cek Your Email');
+            return Redirect::route('login');
+        }   
+    }
+
+    public function verifikasi_reset(Request $request){
+        $id = $request->id;
+        $data = [
+        'id_menu' => '4',
+        'users'=> Profile::find($id),        
+        ];
+        // return $users;
+        return view('login.form_reset',$data);                
+    }
+
+    public function store_verif_reset(Request $request)
+    {
+        $getUser = Profile::find($request->id);
+        if (!empty($getUser)) {
+            $getUser->password = Hash::make($request->password);
+            $getUser->save();
+            
+            if ($getUser) {
+                Session::flash('pesan','Pasword Berhasil Diperbaharui, Login kembali Akun Anda');
+                return Redirect::route('login');
+            }
+        }        
+    }
 }

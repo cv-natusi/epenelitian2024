@@ -40,7 +40,7 @@ class Permohonan extends Model
     public static function getJsonMenunggu($input)
     {
         $table  = 'permohonan as doc';
-        $select = "*,IF(middle_name IS NOT NULL,concat(first_name, ' ',middle_name, ' ',last_name),concat(first_name, ' ',last_name)) as nama_lengkap";        
+        $select = "*,IF(middle_name IS NOT NULL,concat(first_name, ' ',middle_name, ' ',last_name),concat(first_name, ' ',last_name)) as first_name";        
 
       $replace_field  = [
         ['old_name' => 'statusPermohonan', 'new_name' => 'status_permohonan'],
@@ -98,9 +98,9 @@ class Permohonan extends Model
     {
         $table  = 'permohonan as doc';
         if (Auth::getUser()->level=='1'){
-          $select = "*,IF(middle_name IS NOT NULL,concat(first_name, ' ',middle_name, ' ',last_name),concat(first_name, ' ',last_name)) as nama_lengkap,IF(status_hasil IS NULL,'Belum upload hasil',status_hasil) as status_hasil";
+          $select = "*,IF(middle_name IS NOT NULL,concat(first_name, ' ',middle_name, ' ',last_name),concat(first_name, ' ',last_name)) as first_name,IF(status_hasil IS NULL,'Belum upload hasil',status_hasil) as status_hasil";
         }else{
-          $select = "*,IF(middle_name IS NOT NULL,concat(first_name, ' ',middle_name, ' ',last_name),concat(first_name, ' ',last_name)) as nama_lengkap,IF(status_hasil IS NULL,'Belum upload hasil',status_hasil) as status_hasil";
+          $select = "*,IF(middle_name IS NOT NULL,concat(first_name, ' ',middle_name, ' ',last_name),concat(first_name, ' ',last_name)) as first_name,IF(status_hasil IS NULL,'Belum upload hasil',status_hasil) as status_hasil";
         }
 
         $replace_field  = [
@@ -130,7 +130,7 @@ class Permohonan extends Model
             ->orWhere('doc.status','Menunggu Kadin')
             ->orWhere('doc.status','Terima')
             ->groupBy('doc.id_permohonan')//anas
-            ->groupBy('nama_lengkap')
+            ->groupBy('first_name')
             ->groupBy('hasil_penelitian.status_hasil');
           }elseif (Auth::getUser()->level=='2') {
             // code...
@@ -143,7 +143,7 @@ class Permohonan extends Model
             ->orWhere('doc.status','Menunggu Kadin')
             ->orWhere('doc.status','Terima')
             ->groupBy('doc.id_permohonan')//anas
-            ->groupBy('nama_lengkap')
+            ->groupBy('first_name')
             ->groupBy('hasil_penelitian.status_hasil');
           }elseif (Auth::getUser()->level=='4') {
             // code...
@@ -155,7 +155,7 @@ class Permohonan extends Model
             ->where('doc.status','Menunggu Kadin')
             ->orWhere('doc.status','Terima')
             ->groupBy('doc.id_permohonan')//anas
-            ->groupBy('nama_lengkap')
+            ->groupBy('first_name')
             ->groupBy('hasil_penelitian.status_hasil');
           }elseif (Auth::getUser()->level=='4') {
             // code...
@@ -167,7 +167,7 @@ class Permohonan extends Model
             ->where('doc.status','Menunggu Kadin')
             ->orWhere('doc.status','Terima')
             ->groupBy('doc.id_permohonan')//anas
-            ->groupBy('nama_lengkap')
+            ->groupBy('first_name')
             ->groupBy('hasil_penelitian.status_hasil');
           }elseif (Auth::getUser()->level=='6') {
             // code...
@@ -180,7 +180,7 @@ class Permohonan extends Model
             ->where('verifikasi_tempat_penelitian.tempat_penelitian_id', Auth::User()->tempat_penelitian_id)
             ->where('verifikasi_tempat_penelitian.status_verifikasi','Terima')
             ->groupBy('doc.id_permohonan')//anas
-            ->groupBy('nama_lengkap')
+            ->groupBy('first_name')
             ->groupBy('hasil_penelitian.status_hasil');
           }else {
             // code...
@@ -191,7 +191,7 @@ class Permohonan extends Model
             ->leftjoin('hasil_penelitian','hasil_penelitian.permohonan_id','doc.id_permohonan')
             ->where('doc.status','Terima')
             ->groupBy('doc.id_permohonan')//anas
-            ->groupBy('nama_lengkap')
+            ->groupBy('first_name')
             ->groupBy('hasil_penelitian.status_hasil');
           }
         });
@@ -202,7 +202,7 @@ class Permohonan extends Model
     public static function getJsonTolak($input)
     {
         $table  = 'permohonan as doc';
-        $select = "*,IF(middle_name IS NOT NULL,concat(first_name, ' ',middle_name, ' ',last_name),concat(first_name, ' ',last_name)) as nama_lengkap";
+        $select = "*,IF(middle_name IS NOT NULL,concat(first_name, ' ',middle_name, ' ',last_name),concat(first_name, ' ',last_name)) as first_name";
 
          $replace_field  = [
             ['old_name' => 'status', 'new_name' => 'satatus_pengajuan'],

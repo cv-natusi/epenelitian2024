@@ -72,6 +72,12 @@ Route::group(['prefix'=>'api'],function(){
     Route::get('/','Site\RegistrationController@main');
     Route::post('/store','Site\RegistrationController@store')->name('regis_store');
     Route::get('/registrasi/refresh_captcha', 'Site\RegistrationController@refreshCaptcha')->name('refresh_captcha');
+    Route::get('/reset_password', 'Site\RegistrationController@reset_password')->name('reset_password');
+    Route::post('/cek_resetwa', 'Site\RegistrationController@cek_resetwa')->name('cek_resetwa');
+    Route::post('/store_resetpassword', 'Site\RegistrationController@store_resetpassword')->name('store_resetpassword');
+
+    Route::get('/verifikasi_reset/{id}', 'Site\RegistrationController@verifikasi_reset');
+    Route::post('/store_verif_reset', 'Site\RegistrationController@store_verif_reset')->name('store_verif_reset');
   });
 
 // user athor route

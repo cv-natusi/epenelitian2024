@@ -18,12 +18,13 @@
 			    <label>
 			      <input type="checkbox" checked="checked" name="remember"> Remember me
 			    </label>
+				<div>
+					<span class="forgotpsw"><a href="{{ route('reset_password') }}" style="font-size:12px;"> Lupa Password?</a></span>
+				</div>
 		  	</div>
-			  <div class="btn" style="background-color:#f1f1f1">
-			    <button type="button" class="cancelbtn">Cancel</button>
-			    <span class="psw">Dont Have Account?? <a href="{{ url('registrasi/') }}" style="font-weight:bold;"> Registration in here!</a></span>
+			  <div class="btn" style="background-color:#f1f1f1">			    
+			    <span class="psw">Dont Have Account?? <a href="{{ url('registrasi/') }}" style="font-weight:bold;"> Registration in here!</a></span></br>
 			  </div>
-
 			</form>
 	  	</div>
 	</div>

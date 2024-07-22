@@ -1,0 +1,214 @@
+<table style="border-bottom:2px solid #000000; width:100%">
+	<tbody>
+		<tr>
+			<td><img src="[[header]]" style="width:120px" /></td>
+			<td style="text-align:center">
+			<p>PEMERINTAH KABUPATEN SIDOARJO<br />
+			<strong>DINAS KESEHATAN</strong><br />
+			Jl. Mayjen Sungkono No. 46 Sidoarjo<br />
+			Telp. (031) 894 1051, 896 8736 Fax. (031) 894 7911<br />
+			Email: dinkes@sidoarjokab.go.id Website: www.dinkes.sidoarjokab.go.id</p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<p style="text-align:center"><strong>NOTA DINAS</strong></p>
+
+<table style="width:100%">
+	<tbody>
+		<tr>
+			<td style="width:10%">Kepada</td>
+			<td>: Yth. Sdr. Kepala [[instansi-tujuan]]</td>
+		</tr>
+		<tr>
+			<td>Dari</td>
+			<td>: Kepala Dinas Kesehatan Kabupaten Sidoarjo</td>
+		</tr>
+		<tr>
+			<td>Tanggal</td>
+			<td>: <strong> ${tanggal_surat}</strong></td>
+		</tr>
+		<tr>
+			<td>Nomor</td>
+			<td>: <strong>${nomor}</strong></td>
+		</tr>
+		<tr>
+			<td>Sifat</td>
+			<td>: <strong>${sifat}</strong></td>
+		</tr>
+		<tr>
+			<td>Lampiran</td>
+			<td>: <strong>${lampiran}</strong></td>
+		</tr>
+		<tr>
+			<td>Perihal</td>
+			<td>: <strong>${perihal}</strong></td>
+		</tr>
+	</tbody>
+</table>
+
+<p>Memperhatikan surat Kepala Pimpinan [[instansi-asal]] tanggal [[tanggal-pengantar]] Nomor : [[no-surat-pengantar]] dan surat Rekomendasi Kepala Badan Kesatuan Bangsa dan Politik Kabupaten Sidoarjo tanggal [[tanggal-bakesbangpol]] Nomor : [[no-bakesbangpol]] perihal sebagaimana tersebut pada pokok surat dengan ini diharap bantuan Saudara untuk memfasilitasi pelaksanaan kegiatan dimaksud :</p>
+
+<table style="text-indent:40px; width:80%">
+	<tbody>
+		<tr>
+			<td style="width:15%">Nama</td>
+			<td>: <strong> [[nama]]</strong></td>
+		</tr>
+		<tr>
+			<td>NIM/NIDN/NIP</td>
+			<td>: <strong> [[digit-identitas]]</strong></td>
+		</tr>
+		<tr>
+			<td>Pendidikan</td>
+			<td>: [[pendidikan]]</td>
+		</tr>
+		<tr>
+			<td>Waktu</td>
+			<td>: <strong>[[waktu-penelitian]]</strong></td>
+		</tr>
+		<tr>
+			<td>Judul/Topik</td>
+			<td>: <strong>[[judul-penelitian]]</strong></td>
+		</tr>
+	</tbody>
+</table>
+
+<p>Selanjutnya hasil penelitian <strong>wajib</strong> disampaikan kepada Kepala Dinas Kesehatan Kabupaten Sidoarjo dalam bentuk <strong>softfile</strong> ke <strong>email sdkdinkes.sidoarjo@gmail.com.</strong></p>
+
+<p>Demikian untuk menjadikan maklum.</p>
+
+<table style="width:100%">
+	<tbody>
+		<tr>
+			<td style="width:20%">&nbsp;</td>
+			<td style="width:30%">&nbsp;</td>
+			<td style="width:50%">			
+			<span>
+			<strong>Plt. KEPALA DINAS KESEHATAN</strong>
+            </span>
+            </br>
+			<span>
+            <strong>${qrcode}</strong>
+            </span>
+            </br>
+			<apan><strong>dr.LAKHSMIE HERAWATI YUWANTINA, M.Kes</strong>
+            </span>
+            </br>
+			<span>Pembina Tk.I</span>
+            </br>
+			<span>NIP. 197007312005012005</span>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+
+<table style="position:absolute; width:100%">
+	<tbody>
+		<tr>
+			<td style="width:10%"><img src="[[footer]]" style="height:40px; width:130px" /></td>
+			<td style="width:90%">Dokumen ini telah ditandatangani secara elektronik menggunakan sertifikat elektronik yang diterbitkan oleh BSrE Legalitasberkassecara digital diaturoleh Dinas Komunikasi dan Informasi Kabupaten Sidoarjo Untuk mengetahui keabsahan berkas dapat dilakukan dengan memindai qrcode yang tersedia</td>
+		</tr>
+	</tbody>
+</table>
+
+<div style="page-break-before:always">&nbsp;</div>
+<table style="width:100%">
+	<tbody>
+		<tr>
+			<td>Lampiran Surat</td>
+		</tr>
+		<tr>
+			<td style="width:10%">Nomor</td>
+			<td>: <strong>${nomor}</strong></td>
+		</tr>
+		<tr>
+			<td>Tanggal</td>
+			<td>: <strong>${tanggal_surat}</strong></td>
+		</tr>
+	</tbody>
+</table>
+
+<p style="text-align:center"><strong>DATA PENELITI</strong> [[instansi-asal]]</p>
+
+<table border="1" style="width:100%">
+	<thead>
+		<tr>
+			<th style="text-align:center; width:10%"><strong>NO</strong></th>
+			<th style="text-align:center; width:60%"><strong>NAMA</strong></th>
+			<th style="text-align:center; width:30%"><strong>NIM/NIDN/NIP</strong></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td style="text-align:center">1</td>
+			<td style="text-align:center">&nbsp;</td>
+			<td style="text-align:center">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="text-align:center">2</td>
+			<td style="text-align:center">&nbsp;</td>
+			<td style="text-align:center">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="text-align:center">3</td>
+			<td style="text-align:center">&nbsp;</td>
+			<td style="text-align:center">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="text-align:center">4</td>
+			<td style="text-align:center">&nbsp;</td>
+			<td style="text-align:center">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="text-align:center">5</td>
+			<td style="text-align:center">&nbsp;</td>
+			<td style="text-align:center">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="text-align:center">6</td>
+			<td style="text-align:center">&nbsp;</td>
+			<td style="text-align:center">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="text-align:center">7</td>
+			<td style="text-align:center">&nbsp;</td>
+			<td style="text-align:center">&nbsp;</td>
+		</tr>
+	</tbody>
+</table>
+
+<table style="width:100%">
+	<tbody>
+		<tr>
+			<td style="width:20%">&nbsp;</td>
+			<td style="width:30%">&nbsp;</td>
+			<td style="width:50%">			
+			<span>
+			<strong>Plt. KEPALA DINAS KESEHATAN</strong>
+            </span>
+            </br>
+			<span>
+            <strong>${qrcode}</strong>
+            </span>
+            </br>
+			<apan><strong>dr.LAKHSMIE HERAWATI YUWANTINA, M.Kes</strong>
+            </span>
+            </br>
+			<span>Pembina Tk.I</span>
+            </br>
+			<span>NIP. 197007312005012005</span>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<table style="position:absolute; width:100%">
+	<tbody>
+		<tr>
+			<td style="width:10%"><img src="[[footer]]" style="height:40px; width:130px" /></td>
+			<td style="width:90%">Dokumen ini telah ditandatangani secara elektronik menggunakan sertifikat elektronik yang diterbitkan oleh BSrE Legalitasberkassecara digital diaturoleh Dinas Komunikasi dan Informasi Kabupaten Sidoarjo Untuk mengetahui keabsahan berkas dapat dilakukan dengan memindai qrcode yang tersedia</td>
+		</tr>
+	</tbody>
+</table>

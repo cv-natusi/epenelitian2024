@@ -38,10 +38,10 @@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 main-layer">
       <div class="body p-0 border-top-blue-3">
         <div class="col-md-4 col-sm-4 col-xs-12 form-inline main-layer" style='padding:5px'>
-          <button type="button" class="btn btn-sm btn-primary btn-add" id="btn-add">
+          <!-- <button type="button" class="btn btn-sm btn-primary btn-add" id="btn-add">
             <span class="fa fa-plus"></span> &nbsp Tambah Lembar Konfirmasi
-          </button>
-        </div>
+          </button> -->
+        </div>        
         <!-- Search -->
         <div class="col-md-4 col-sm-4 col-xs-12 form-inline pull-right panelSearch p-10 m-b-0">
           <div class="col-md-4 col-sm-4 col-xs-12 m-b-0">
@@ -119,7 +119,7 @@
           '<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i></a>' +
           '<ul class="dropdown-menu pull-right">' +
           '<li onclick="update_lembar(' + rowIndex + ')"><a href="javascript:void(0);"><i class="fa fa-pencil"></i> Edit</a></li>' +
-          '<li onclick="delete_lembar(' + rowIndex + ')"><a href="javascript:void(0);"><i class="fa fa-trash-o"></i> Delete</a></li>' +
+          // '<li onclick="delete_lembar(' + rowIndex + ')"><a href="javascript:void(0);"><i class="fa fa-trash-o"></i> Delete</a></li>' +
           '</ul>' +
           '</div>';
         return menu;
