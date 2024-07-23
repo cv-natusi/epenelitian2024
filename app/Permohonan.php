@@ -60,6 +60,7 @@ class Permohonan extends Model
             return $data->join('users','users.id','doc.users_id')
             ->join('profiles','profiles.users_id','doc.users_id')
             ->leftjoin('jenis_penelitian','jenis_penelitian.id_jenis_penelitian','doc.jenis_penelitian_id')
+            ->leftjoin('verifikasi_tempat_penelitian','verifikasi_tempat_penelitian.permohonan_id','doc.id_permohonan')
             ->where('doc.status','Menunggu Admin');
           }elseif (Auth::getUser()->level=='2') {
             // code...
@@ -125,6 +126,7 @@ class Permohonan extends Model
             ->leftjoin('item_permohonan as item', 'item.permohonan_id', 'doc.id_permohonan')
             ->leftjoin('jenis_penelitian','jenis_penelitian.id_jenis_penelitian','doc.jenis_penelitian_id')
             ->leftjoin('hasil_penelitian','hasil_penelitian.permohonan_id','doc.id_permohonan')
+            ->leftjoin('verifikasi_tempat_penelitian','verifikasi_tempat_penelitian.permohonan_id','doc.id_permohonan')
             ->where('doc.status','Menunggu Kasi')
             ->orWhere('doc.status','Menunggu Kabid')
             ->orWhere('doc.status','Menunggu Kadin')
@@ -223,6 +225,7 @@ class Permohonan extends Model
                 return $data->join('users','users.id','doc.users_id')
                         ->join('profiles','profiles.users_id','doc.users_id')
                         ->leftjoin('jenis_penelitian','jenis_penelitian.id_jenis_penelitian','doc.jenis_penelitian_id')
+                        ->leftjoin('verifikasi_tempat_penelitian','verifikasi_tempat_penelitian.permohonan_id','doc.id_permohonan')
                         ->where('doc.status','Tolak');
             }else{
                  return $data->join('users','users.id','doc.users_id')

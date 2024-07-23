@@ -37,7 +37,6 @@
       <h3 style="font-weight: bold;">Alur Penelitian</h3>
       <hr>
       <iframe src="{{url('uploads/files/alur.pdf')}}" width="85%" height="700px"></iframe>
-      {{-- <img src="{{url('uploads/files/Screenshot_10.png')}}" width="85%"> --}}
     </div><br>
 </div>
 @endsection
