@@ -8,6 +8,7 @@ use App\Permohonan;
 use App\Lembar_Konfir;
 use App\ItemPermohonan;
 use App\Tempat_Penelitian;
+use App\VerifikasiTempatPenelitian;
 use App\Http\Libraries\Formatter;
 use Illuminate\Support\Facades\Mail;
 
@@ -123,7 +124,8 @@ class APIController extends Controller
     $kategori = $request->kategori;
 
     $pakai_surat = $this->generate_surat($id_permohonan,$kategori);
-
+    
+    // return view('owner.cetak.view');
     $data = [
       'data'=>$pakai_surat,
     ];
@@ -137,36 +139,43 @@ class APIController extends Controller
     $get_surat = Lembar_Konfir::where('keterangan',$kategori)->first();
     // $get_surat = Lembar_Konfir::find($kategori);    
 
-    $permohonan = Permohonan::leftjoin('profiles as p','p.users_id','permohonan.users_id')->where('id_permohonan',$id_permohonan)->first();
+    $permohonan = Permohonan::leftjoin('profiles as p','p.users_id','permohonan.users_id')    
+    ->where('id_permohonan',$id_permohonan)->first();
     $surat = $get_surat->form_konfirmasi;
+
+    $tempat_penelitian = VerifikasiTempatPenelitian::select('nama_tempat_penelitian')
+    ->where('permohonan_id',$permohonan->id_permohonan)->get();
 
     $nama_tengah = ($permohonan->middle_name!='') ? $permohonan->middle_name.' ' : ' ';
     $nama = $permohonan->first_name.' '.$nama_tengah.$permohonan->last_name;
     // return $permohonan;
     $pakai_surat = $surat;
+    $instansi_asal = $permohonan->unit_instansi ? $permohonan->unit_instansi : $permohonan->unit_kerja;
     $kepada = '';
-    if($permohonan->tempat_penelitian!=''){
-      $kata = explode("|",$permohonan->tempat_penelitian);
-      if(count($kata)>1){
+    if($tempat_penelitian){ 
+      
+      if(count($tempat_penelitian)>1){
         $no = 1;        
-        for ($i=0; $i < count($kata); $i++) {
-          $kepada .= $no.'. Kepala '.$kata[$i].'<br>';
+        for ($i=0; $i < count($tempat_penelitian); $i++) {
+          $kepada .= $no.'. '.$tempat_penelitian[$i]->nama_tempat_penelitian.'<br>';
           $no++;
         }
       }else{        
-        if(count($kata)>0){
-          $kepada = 'Kepala '.$kata[0];
+        if(count($tempat_penelitian)>0){
+          $kepada = $tempat_penelitian[0]->nama_tempat_penelitian;
         }else{
           $kepada = '-';
         }
       }
     }
+
+    // return $kepada;
     $pakai_surat = str_replace('[[instansi-tujuan]]',$kepada,$pakai_surat);
     $pakai_surat = str_replace('[[header]]',url('/')."/images/sidoarjo-black-white-seek-logo.png",$pakai_surat);
     $pakai_surat = str_replace('[[footer]]',url('/')."/images/bsre-logo.png",$pakai_surat);
     $pakai_surat = str_replace('[[tahun-pengajuan]]',date('Y',strtotime($permohonan->tgl_pengajuan)),$pakai_surat);
     $pakai_surat = str_replace('[[nama]]',$nama,$pakai_surat);
-    $pakai_surat = str_replace('[[instansi-asal]]',$permohonan->unit_kerja,$pakai_surat);
+    $pakai_surat = str_replace('[[instansi-asal]]',$instansi_asal,$pakai_surat);
     $kategori = 'NIK';
     if($permohonan->category=='mhs'){
       $kategori = 'NIM';
