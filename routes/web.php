@@ -176,7 +176,8 @@ Route::group(['middleware'=>'admin'],function(){
         Route::post('/addUserPkm','Owner\ManagementController@addUserPkm')->name('addUserPkm');
         Route::post('/docreatePkm','Owner\ManagementController@docreatePkm')->name('docreatePkm');
         Route::post('/docreatePhm','Owner\ManagementController@docreatePhm')->name('docreatePhm');
-        
+
+        Route::post('/cek_email', 'Owner\ManagementController@cek_email')->name('cek_email');
       });
 
       Route::group(['prefix'=>'identitas'],function(){

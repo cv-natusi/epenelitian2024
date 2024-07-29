@@ -17,6 +17,7 @@ use Session;
 use Redirect;
 use Validator;
 use Hash;
+use Illuminate\Support\Facades\Mail;
 
 class ManagementController extends Controller
 {
@@ -227,27 +228,7 @@ class ManagementController extends Controller
              
     }
     public function docreatePhm(Request $request)
-    {
-        // Validate the request
-        $validator = Validator::make($request->all(), [
-            'username' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required',
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'gender' => 'required',
-            'phone' => 'required',
-            'no_identitas' => 'required',
-        ]);
-    
-        // Check if validation fails
-        if ($validator->fails()) {
-            return redirect()
-                ->back()
-                ->withInput()
-                ->withErrors($validator->errors());
-        }
-    
+    {        
         // Create the User
         $user = new User;
         $user->username = $request->username;
@@ -256,22 +237,40 @@ class ManagementController extends Controller
         $user->level = 3;
         $user->is_banned = 0;
         $user->save();
-    
+
+        // return $user;
         if ($user) {
             // Create the Pr
             $profile = new Profile;
-            $profile->username = $request->username;
-            $profile->email = $request->email;
-            $profile->users_id = $user->id;
-            $profile->first_name= $request->first_name;
-            $profile->middle_name= $request->middle_name;
-            $profile->last_name= $request->last_name;
-            $profile->gender= $request->gender;
-            $profile->last_name= $request->phone;
-            $profile->no_identitas= $request->no_identitas;
-            $profile->phone= $request->phone;
-            $profile->password = Hash::make($request->password);
-            $profile->save();
+            $profile->username      = $request->username;
+            $profile->password      = Hash::make($request->password);
+            $profile->first_name    = $request->first_name;
+            $profile->middle_name   = $request->middle_name;
+            $profile->last_name     = $request->last_name;
+            $profile->category      = 'mhs';
+            $profile->gender        = $request->gender;
+            $profile->pendidikan_terakhir = $request->pendidikan_terakhir;
+            $profile->email               = $request->email;
+            $profile->phone               = $request->phone;
+            $profile->mailing_ads         = $request->mailing_ads;
+            $profile->confirm_reg         = 'email';
+            $profile->no_identitas        = $request->no_identitas;
+            $profile->unit_instansi       = $request->unit_instansi;            
+            $profile->users_id            = $user->id;            
+            $profile->save();            
+
+            $data = [
+              'foo'=>'bar',
+              'username'=>$request->username,
+              'password'=>$request->password,
+            ];
+            $tujuan = $request->email;
+            
+            // Komen Sementara
+            $sendMail = Mail::send('emails.hello', $data, function ($mail) use ($tujuan) {
+                        $mail->to($tujuan);
+                        $mail->subject('Congratulations! your account was successfully created');
+            });
     
             // Check if profile creation is successful
             if ($profile) {
@@ -337,6 +336,19 @@ class ManagementController extends Controller
           Session::flash('message',$message);
           Session::flash('type',$type);
           return Redirect::to('owner/identitas/management_users');
+        }
+
+        public function cek_email(Request $request)
+        {                            
+            $user = Profile::where('email',$request->email)        
+            ->first();      
+              
+              if (!empty($user)) {
+                $return = ['status' => 'success', 'code' => '200', 'message' => 'Data Ditemukan !!', 'data' => $user];
+              }else{
+                $return = ['status' => 'error', 'code' => '404', 'message' => 'Data Tidak Ditemukan !!', 'data' => ''];
+              }
+              return response()->json($return);        
         }
 
 }
