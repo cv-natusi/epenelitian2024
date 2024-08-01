@@ -149,8 +149,11 @@ class APIController extends Controller
     $nama_tengah = ($permohonan->middle_name!='') ? $permohonan->middle_name.' ' : ' ';
     $nama = $permohonan->first_name.' '.$nama_tengah.$permohonan->last_name;
     // return $permohonan;
+    
     $pakai_surat = $surat;
     $instansi_asal = $permohonan->unit_instansi ? $permohonan->unit_instansi : $permohonan->unit_kerja;
+    $pendidikan_surat = $permohonan->pendidikan_terakhir ? $permohonan->pendidikan_terakhir : $permohonan->pendidikan_terakhir;
+
     $kepada = '';
     if($tempat_penelitian){ 
       
@@ -191,7 +194,7 @@ class APIController extends Controller
     $pakai_surat = str_replace('[[waktu-cetak]]','&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; '.$wkt_cetak_pakai[1].' '.$wkt_cetak_pakai[2],$pakai_surat);
     $pakai_surat = str_replace('[[waktu-penelitian]]',Formatter::tanggal_indo($permohonan->tgl_awal).' s.d. '.Formatter::tanggal_indo($permohonan->tgl_akhir),$pakai_surat);
     $pakai_surat = str_replace('[[judul-penelitian]]',$permohonan->judul_penelitian,$pakai_surat);
-    $pakai_surat = str_replace('[[pendidikan]]',$permohonan->pendidikan_terakhir,$pakai_surat);
+    $pakai_surat = str_replace('[[pendidikan]]',$pendidikan_surat,$pakai_surat);
     $pakai_surat = str_replace('[[no-surat-pengantar]]',$permohonan->nomor_surat_pimpinan,$pakai_surat);
     $pakai_surat = str_replace('[[tanggal-pengantar]]',Formatter::tanggal_indo($permohonan->tgl_surat_pimpinan),$pakai_surat);
     $pakai_surat = str_replace('[[jabatan-pj]]',$permohonan->jabatan_pj,$pakai_surat);
